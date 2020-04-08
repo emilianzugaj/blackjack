@@ -6,7 +6,7 @@ dealer_hand=[]
 player_hand=[]
 card_values={}
 deck=[]
-deck_at_once=1
+deck_at_once=4
 
 for deck_used in range(deck_at_once):
     for i in range(2,11):
@@ -49,7 +49,6 @@ def card_sum(hand):
         as_count -= 1
     return sum_value
 
-deck=new_deck(deck_template)
 
 cash=1000
 while cash>0:
@@ -72,33 +71,32 @@ while cash>0:
         except:
             print("invalid input, try again")
 
-    add_card_from_deck(deck, dealer_hand)
+    deck = add_card_from_deck(deck, dealer_hand)
     print("dealer card hiden")
 
     card_dealer=1
-    add_card_from_deck(deck, dealer_hand)
+    deck = add_card_from_deck(deck, dealer_hand)
     print("dealer got", dealer_hand[card_dealer])
     card_dealer+=1
 
     card_player=0
-    add_card_from_deck(deck, player_hand)
+    deck = add_card_from_deck(deck, player_hand)
     print("you got", player_hand[card_player])
     card_player+=1
 
-    add_card_from_deck(deck, player_hand)
+    deck = add_card_from_deck(deck, player_hand)
     print("you got", player_hand[card_player])
     card_player+=1
 
 
     while True:
-        print("total", card_sum(player_hand), "points")
         if card_sum(player_hand)==21:
             print("you got blackjack")
             break
         if card_sum(player_hand)>21:
             print("you burst")
             break
-        print("you've got",card_sum(player_hand),"total")
+        print("you've got",card_sum(player_hand),"points total")
         a = input("do you want to rise? Y/N\n")
         if card_sum(player_hand)<21:
             if a == "Y" or a == "y" or a == "yes":
@@ -114,11 +112,15 @@ while cash>0:
     while card_sum(dealer_hand)<17:
         print("dealer takes a card")
         add_card_from_deck(deck,dealer_hand)
-        print("dealer got")
-        for i in dealer_hand:
-            print( i," ",end="")
+        print("dealer got",dealer_hand[card_dealer])
+        card_dealer+=1
 
-        print("dealer have", card_sum(dealer_hand),"total")
+    print("dealers hand")
+    for i in dealer_hand:
+            print( i," ",end="")
+    print()
+    print("dealer have", card_sum(dealer_hand),"points total")
+    print("you have", card_sum(player_hand), "points total")
 
     player=card_sum(player_hand)
     dealer=card_sum(dealer_hand)
